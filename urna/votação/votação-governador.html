@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urna Eletrônica</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="../imagens/TSE.png" type="image/x-icon">
+</head>
+<body>
+    <div class="main-votacao">
+        <div class="tela">
+                <h3 class="title-votacao">SEU VOTO PARA:</h3>
+                <h3 class="title-votacao-meio">GOVERNADOR</h3>
+                <div class="numero">
+                    <h3 class="title-votacao">Número:</h3>
+                    <div class="inputs">
+                        <input type="number" id="input-governador1">
+                        <input type="number" id="input-governador2">
+                    </div>
+                </div>
+                <h3 class="title-votacao">Nome: </h3>
+                <div class="tela-footer">
+                    <h3 class="title-votacao">Partido: </h3>
+                    <img src="../imagens/Leite.png" alt="Presidente Lula" class="img-presidente">
+                    <img src="../imagens/Sartori.png" alt="Ex-Presidente Bolsonaro" class="img-presidente">
+                    <img src="../imagens/Cândido.png" alt="Ex-Presidente Enéas" class="img-presidente">
+                    <img src="../imagens/Neymar.png" alt="Ex-Presidente Dilma" class="img-presidente">
+                </div>
+        </div>
+        <div class="teclado">
+            <img src="../imagens/JE.png" alt="Logo Justiça Eleitoral" class="img-JE">
+            <div class="numeros-votacao">
+                <button class="numero-votacao" value="1">1</button>
+                <button class="numero-votacao" value="2">2</button>
+                <button class="numero-votacao" value="3">3</button>
+                <button class="numero-votacao" value="4">4</button>
+                <button class="numero-votacao" value="5">5</button>
+                <button class="numero-votacao" value="6">6</button>
+                <button class="numero-votacao" value="7">7</button>
+                <button class="numero-votacao" value="8">8</button>
+                <button class="numero-votacao" value="9">9</button>
+                <button class="botao-invisivel" value=" "></button>
+                <button class="numero-votacao" value="0">0</button>
+            </div>
+            <div class="botoes-votacao">
+                <a href="votação-prefeito.html">
+                    <div class="confirma botao-votacao">CONFIRMA</div>
+                </a>
+                <div class="branco-corrige">
+                    <div class="branco botao-votacao">BRANCO</div>
+                    <div class="corrige botao-votacao">CORRIGE</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        "use strict"
+        let h3 = [...document.querySelectorAll('h3')]
+        let inputs = [document.querySelector('#input-governador1'), document.querySelector('#input-governador2')]
+        let imagens = [...document.querySelectorAll('.img-presidente')]
+        let botoes = [...document.querySelectorAll('.numero-votacao')]
+        let confirma = document.querySelector('.confirma')
+        let destino = document.querySelector('.destino')
+        let branco = document.querySelector('.branco')
+        let corrige = document.querySelector('.corrige')
+        for(let aux = 0; aux < 2; aux++) {
+            botoes.map((el) => {
+                el.addEventListener("click", () => {
+                    inputs[aux].value = el.value
+                    aux++
+                    if(inputs[0].value == 4 && inputs[1].value == 5) {
+                        h3[3].innerText="Nome: Eduardo Leite"
+                        h3[4].innerText="Partido: PSDB"
+                        imagens[0].classList.add('presidente-selecionado')
+                        imagens[0].classList.remove('img-presidente')
+                    }
+                    if(inputs[0].value == 1 && inputs[1].value == 5) {
+                        h3[3].innerText="Nome: José Ivo Sartori"
+                        h3[4].innerText="Partido: MDB"
+                        imagens[1].classList.add('presidente-selecionado')
+                        imagens[1].classList.remove('img-presidente')
+                    }
+                    if(inputs[0].value == 7 && inputs[1].value == 7) {
+                        h3[3].innerText="Nome: Cândido"
+                        h3[4].innerText="Partido: TI"
+                        imagens[2].classList.add('presidente-selecionado')
+                        imagens[2].classList.remove('img-presidente')
+                    }
+                    if(inputs[0].value == 1 && inputs[1].value == 2) {
+                        h3[3].innerText="Nome: Neymar Junior"
+                        h3[4].innerText="Partido: PF"
+                        imagens[3].classList.add('presidente-selecionado')
+                        imagens[3].classList.remove('img-presidente')
+                    }
+                })
+            })
+            corrige.addEventListener("click", () => {
+                inputs.map((el) => {
+                    el.value = ""
+                })
+                aux = 0
+                h3[3].innerText="Nome:"
+                h3[4].innerText="Partido:"
+                imagens.map((el) => {
+                    el.classList.add('img-presidente')
+                    el.classList.remove('presidente-selecionado')
+                })
+            })
+        }
+        branco.addEventListener("click", () => {
+            if(confirm("Seu voto será em branco!")) {
+                inputs.map((el) => {
+                    el.value = ""
+                    destino.href = "votação-prefeito.html"
+                })
+            } else {
+                destino.href = "#"
+            }
+        })
+        confirma.addEventListener("click", () => {
+            let valor01Governador = inputs[0].value
+            let valor02Governador = inputs[1].value
+            let votosLeite = 0
+            let votosSartori = 0
+            let votosCandido = 0
+            let votosNeymar = 0
+            if(inputs[0].value == 4 && inputs[1].value == 5) {
+                votosLeite+=1
+                localStorage.setItem('votosLeite', votosLeite)
+                window.location.href = "../resultados.html"
+            }
+            if(inputs[0].value == 1 && inputs[1].value == 5) {
+                votosSartori+=1
+                localStorage.setItem('votosSartori', votosSartori)
+                window.location.href = "../resultados.html"
+            }
+            if(inputs[0].value == 7 && inputs[1].value == 7) {
+                votosCandido+=1
+                localStorage.setItem('votosCandido', votosCandido)
+                window.location.href = "../resultados.html"
+            }
+            if(inputs[0].value == 1 && inputs[1].value == 2) {
+                votosNeymar+=1
+                localStorage.setItem('votosNeymar', votosNeymar)
+                window.location.href = "../resultados.html"
+            }
+        })
+    </script>
+</body>
+</html>
